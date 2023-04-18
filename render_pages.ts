@@ -1,17 +1,19 @@
 import { DataItem } from "./fetch.js";
 
-
-
 const renderHeader = (title: string) => `
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=fallback" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/styles.css">
     <title>${title}</title>
 </head>
 `
 const renderGallery = (title: string, dataArr: Array<DataItem>) => {
-    let html = `<span class="main-title">${title}</span><main>`
+    let html = `<span class="index-title">${title}</span><main class="index-main">`
     for (const item of dataArr) {
         html += `<div><a>
         <img src="${item.image}" alt="${item.ellipsisTitle}" width="100%" height="100%" />
