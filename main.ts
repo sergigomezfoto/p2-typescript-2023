@@ -1,11 +1,9 @@
 import { DataItem, fetchJson } from "./fetch.js";
 import { writeFile } from "fs/promises";
-const resultdata = JSON.stringify(await fetchJson());
+import { renderIndex } from "./render.js";
 
-
-
-
-//await writeFile('results.json', resultdata);
+const itemsArray:DataItem[] = await fetchJson()
+writeFile('index.html', renderIndex('nebula', itemsArray));
 
 
 // *********************************************************************************************************************

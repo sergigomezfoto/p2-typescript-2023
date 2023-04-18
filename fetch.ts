@@ -26,23 +26,27 @@ export class DataItem {
     get originalImage() {
         return this.image.replace(/~thumb\./, '~orig\.')
     }
-    get keywordsString(){
+    get keywordsString() {
         return this.keywords.join(' · ')
     }
 }
 
 
 export const fetchJson = async (query: string = 'nebula') => {
-    let cleanData: Array<DataItem> | string = [];
+    const cleanData: Array<DataItem> = [];
     try {
-        const data = await fetch(`https://images-api.naa.gov/search?q=${query}&media_type=image`);
+        const data = await fetch(`https://images-api.nasa.gov/search?q=${query}&media_type=image`);
         const jsonResponse: any = await data.json();
         for (const { href, data, links } of jsonResponse.collection.items) {
-            cleanData.push(new DataItem(href, data[0].title, links[0].href, data[0].center, data[0].date_created, data[0].description, data[0].keywords));
+            if (data[0].center !== 'ARC') {
+                cleanData.push(new DataItem(href, data[0].title, links[0].href, data[0].center, data[0].date_created, data[0].description, data[0].keywords));              
+            }
         };
-        return cleanData
-        
+
     } catch (error) {
-       console.log(error);
+        console.log(error);
+    }
+    finally {
+        return cleanData
     }
 }
