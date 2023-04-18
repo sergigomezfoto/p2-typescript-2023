@@ -1,8 +1,6 @@
-const fetchJson = async () => {  
-    const data = await fetch("https://images-api.nasa.gov/search?q=hubble")
-    const jsonResponse :Array<any> = await data.json();
-    console.log(jsonResponse); 
-       
+import { fetchJson } from "./fetch.js";
+import { writeFile } from "fs/promises";
+const resultdata =  JSON.stringify(await fetchJson());
 
-}
-fetchJson();
+await writeFile('results.json', resultdata);
+
