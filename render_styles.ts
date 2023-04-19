@@ -25,7 +25,6 @@ body{
     z-index: 1;
     text-align: center;
     transition:  0.5s all;
-mix-blend-mode: difference;
 
 }
 
