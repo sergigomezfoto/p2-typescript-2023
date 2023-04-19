@@ -14,9 +14,9 @@ body{
     color: #ffffff;
     min-height: 300px;
     max-height: 300px;
-
     font-size: clamp(10px, 20vw, 300px);
     padding: 0;
+    font-weight: 900;
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
     pointer-events: none;
@@ -72,6 +72,7 @@ body{
 	color: white;
     text-transform: capitalize;
     font-size: 90%;
+    font-weight: 900;
     font-family: 'Poppins', sans-serif;
 
 }
@@ -88,6 +89,35 @@ body{
 
 .index-main>div:hover .gallery-img {
 	transform: scale(1.4) rotate(10deg);
+}
+
+footer{
+    border-top: 1px solid rgba(255, 255, 255,0.5);
+    display:flex;
+    min-height: 80px;
+    align-items: center;
+    justify-content: center;
+
+
+}
+footer span{
+
+    text-align: center;
+    padding: 10px;
+  
+    color:white;
+    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
+}
+
+a,a:visited{
+    color:white;
+    font-weight:bold;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
 }
 
 

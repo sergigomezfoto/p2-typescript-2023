@@ -7,7 +7,7 @@ const renderHeader = (title: string) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=fallback" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=fallback" rel="stylesheet">
     <link rel="stylesheet" href="./styles/styles.css">
     <title>${title}</title>
 </head>
@@ -27,7 +27,10 @@ const renderGallery = (title: string, dataArr: Array<DataItem>) => {
         </div>`;
     }
 
-    html += `</main><footer></footer><script src="./js/js.js"></script>`
+    html += `</main>
+    <footer>
+    <span>This static page was created dynamically by <a href="https://example.com" taget="_blank">Sergi Gómez</a> using <a href="https://example.com" target="_blank">BUN</a> and <a href="https://example.com" target="_blank">Typescript</a> on: <b id="time">${new Date().toLocaleString("en-US", { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hourCycle: 'h23', }).replace(',', ' at')}</b>. Take a look at the <a href="" target="_blank">Git Repository</a></span> 
+    <script src="./js/js.js"></script>`
     return html;
 }
 
