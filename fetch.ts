@@ -10,7 +10,8 @@ export class DataItem {
         public center: string,
         public date: string,
         public description: string,
-        public keywords: string[]
+        public keywords: string[],
+        public index:number
     ) { }
 
     get ellipsisTitle() {
@@ -29,6 +30,9 @@ export class DataItem {
     get keywordsString() {
         return this.keywords.join(' · ')
     }
+    get titleSlug(){
+        return  `${this.index}-${this.title.replace(/\s{2,}|\r|\t|\n|[!@#$%^&*(),.?"’·'=\+`´:{}|<>\u00C0-\u00ff]/g, "").trim().toLocaleLowerCase().replaceAll(' ','-')}`;
+    }
 }
 
 
@@ -37,9 +41,11 @@ export const fetchJson = async (query: string = 'nebula') => {
     try {
         const data = await fetch(`https://images-api.nasa.gov/search?q=${query}&media_type=image`);
         const jsonResponse: any = await data.json();
+        let index:number =0;
         for (const { href, data, links } of jsonResponse.collection.items) {
-            if (data[0].center !== 'ARC') {
-                cleanData.push(new DataItem(href, data[0].title, links[0].href, data[0].center, data[0].date_created, data[0].description, data[0].keywords));              
+            if (data[0].center.toLowerCase() !== 'arc' && data[0].center.toLowerCase() !== 'select') {
+                index +=1;
+                cleanData.push(new DataItem(href, data[0].title, links[0].href, data[0].center, data[0].date_created, data[0].description, data[0].keywords,index));              
             }
         };
 
