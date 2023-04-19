@@ -14,8 +14,7 @@ mkdirSync(`./${keyWord}_page/pages/`,{ recursive: true });
 writeFileSync(`./${keyWord}_page/styles/styles.css`, renderStyles());
 writeFileSync(`./${keyWord}_page/js/js.js`, renderJs());
 writeFileSync(`./${keyWord}_page/index.html`, renderIndex(keyWord, itemsArray));
-// let userinfo = Intl.DateTimeFormat().resolvedOptions();
-// let date = new Date().toLocaleString("en-US", { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hourCycle: 'h23', }).replace(',', ' at');
+
 
 
 
