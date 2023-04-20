@@ -33,6 +33,9 @@ export class DataItem {
     get titleSlug(){
         return  `${this.index}-${this.title.replace(/\s{2,}|\r|\t|\n|[!@#$%^&*(),.?"·'\u2019=\+`´:{}|<>\u00C0-\u00ff]|’/g, "").trim().toLocaleLowerCase().replaceAll(' ','-')}`;
     }
+    get cleanText(){
+        return this.description.replaceAll('\"','"');
+    }
 }
 
 

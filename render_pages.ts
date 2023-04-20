@@ -1,7 +1,8 @@
 import { writeFileSync } from "fs";
 import { DataItem } from "./fetch.js";
+import { it } from "test";
 
-type OptionTypes ="index"|"detail";
+type OptionTypes = "index" | "detail";
 
 const renderHeader = (title: string, page: OptionTypes) => `
 <head>
@@ -12,6 +13,7 @@ const renderHeader = (title: string, page: OptionTypes) => `
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,900;1,400&display=fallback" rel="stylesheet">
     <link rel="stylesheet" href="${page === "index" ? './styles/styles.css' : '../styles/styles.css'}">
+    ${page === "detail" ? `<base target="_blank">` : ''}
     <title>${title}</title>
 </head>
 `;
@@ -58,76 +60,66 @@ const renderGallery = (title: string, dataArr: Array<DataItem>) => {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DETAIL
-const renderDetailInterior = (item: DataItem) =>
-    `
+const renderDetailInterior = async (item: DataItem) => {
+
+    const data = await fetch(item.images);
+    const jsonResponse: string[] = await data.json();
+    const matchMedium = jsonResponse.filter(it => it.includes('~medium'));
+    let mediumImage: string = '';
+    if (matchMedium.length > 0) {
+        mediumImage = item.mediumImage;
+    } else {
+        mediumImage=item.originalImage;
+    }
+    console.log(`pàgina: ${item.title}`);
+    
+    return `
     <main class="detail-main">
 
-    <h1 class="detail-title">Planetary Nebula</h1>
+    <h1 class="detail-title">${item.title}</h1>
     <div class="detail-image">
-        <figure>
-            <a href="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001955/GSFC_20171208_Archive_e001955~orig.jpg"
-                target="_blank">
-                <img class="gallery-img"
-                    src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001955/GSFC_20171208_Archive_e001955~medium.jpg"
-                    alt="Hubble reveals heart of Lagoon Nebula" />
-            </a>
-            <figcaption><span>Date taken</span><span>2023/08/21</span> <span>Authorship</span> <span>NASA's CFT centre</span> <span>Keywords & Keyphrases</span>
-                <span> Hubble Space Telescope · Cat's Eye Nebula · catseyenebula</span></figcaption>
+    <figure>
+    <a href="${item.originalImage}"
+    target="_blank">
+    <img class="gallery-img"
+    src="${mediumImage}"
+    alt="${item.title}" />
+    </a>
+    <figcaption><span>Date taken</span><span>${item.date}</span> <span>Authorship</span> <span>NASA's ${item.center} centre</span> <span>Keywords & Keyphrases</span>
+    <span> ${item.keywords}</span></figcaption>
         </figure>
         <h1>Behind the image</h1>
     
         <p class="detail-text">
-            This planetary nebula's simple, graceful appearance is thought to be due to perspective: our view from
-            Earth looking straight into what is actually a barrel-shaped cloud of gas shrugged off by a dying
-            central star. Hot blue gas near the energizing central star gives way to progressively cooler green and
-            yellow gas at greater distances with the coolest red gas along the outer boundary. Credit: NASA/Hubble
-            Heritage Team ---- The Ring Nebula's distinctive shape makes it a popular illustration for astronomy
-            books. But new observations by NASA's Hubble Space Telescope of the glowing gas shroud around an old,
-            dying, sun-like star reveal a new twist. &quot;The nebula is not like a bagel, but rather, it's like a
-            jelly doughnut, because it's filled with material in the middle,&quot; said C. Robert O'Dell of
-            Vanderbilt University in Nashville, Tenn. He leads a research team that used Hubble and several
-            ground-based telescopes to obtain the best view yet of the iconic nebula. The images show a more complex
-            structure than astronomers once thought and have allowed them to construct the most precise 3-D model of
-            the nebula. &quot;With Hubble's detail, we see a completely different shape than what's been thought
-            about historically for this classic nebula,&quot; O'Dell said. &quot;The new Hubble observations show
-            the nebula in much clearer detail, and we see things are not as simple as we previously thought.&quot;
-            The Ring Nebula is about 2,000 light-years from Earth and measures roughly 1 light-year across. Located
-            in the constellation Lyra, the nebula is a popular target for amateur astronomers. Read more: <a
-                href=\"http://1.usa.gov/14VAOMk\" rel=\"nofollow\">1.usa.gov/14VAOMk</a> <b><a
-                    href=\"http://www.nasa.gov/audience/formedia/features/MP_Photo_Guidelines.html\"
-                    rel=\"nofollow\">NASA image use policy.</a></b> <b><a
-                    href=\"http://www.nasa.gov/centers/goddard/home/index.html\" rel=\"nofollow\">NASA Goddard Space
-                    Flight Center</a></b> enables NASA’s mission through four scientific endeavors: Earth Science,
-            Heliophysics, Solar System Exploration, and Astrophysics. Goddard plays a leading role in NASA’s
-            accomplishments by contributing compelling scientific knowledge to advance the Agency’s mission.
-            <b>Follow us on <a href=\"http://twitter.com/NASAGoddardPix\" rel=\"nofollow\">Twitter</a></b> <b>Like
-                us on <a href=\"http://www.facebook.com/pages/Greenbelt-MD/NASA-Goddard/395013845897?ref=tsd\"
-                    rel=\"nofollow\">Facebook</a></b> <b>Find us on <a
-                    href=\"http://instagram.com/nasagoddard?vm=grid\" rel=\"nofollow\">Instagram</a></b>
-        </p>
-    </div>
+            ${item.cleanText}
+            </p>
+            </div>
+            
+            </main>
+            
+            
+            `;
+}
 
-</main>
-
-
-`;
-
-const renderDetail = (title: string, dataArr: Array<DataItem>) => {
-
+const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
+    // let test = true;
     for (const item of dataArr) {
+        // if (test === true) {
+
         let html = `
-            <!DOCTYPE html>
+        <!DOCTYPE html>
         <html lang="en">
         ${renderHeader(title + '-' + item.keywordsString, 'detail')}
         <body>
-        ${renderDetailInterior(item)}
+        ${ await renderDetailInterior(item)}
         ${renderFooter()}
         ${renderScripts('detail')}
         </body>
         </html>
         `;
         writeFileSync(`./${title}_page/pages/${item.titleSlug}.html`, html);
-
+        // test = false;
+        // }
     }
 }
 
