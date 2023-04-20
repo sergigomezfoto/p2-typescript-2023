@@ -1,4 +1,5 @@
 
+
 * {
     margin: 0;
     padding: 0;
@@ -160,7 +161,26 @@ footer a:hover {
 }
 
 /* //////////////////////////////////////////////////////////////////////////// DETAIL */
+.detail-return {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    color: white;
+    font-size: 1rem;
+}
 
+.detail-return a{
+    padding:10px;
+    text-decoration: none;
+    color:white;
+}
+.detail-return a::before {
+    position: absolute;
+    content: '↫';
+    top: -15px;
+    left: -2px;
+    font-size: 1.62rem;
+}
 .detail-main {
     padding: 20px;
     display: flex;
@@ -169,7 +189,7 @@ footer a:hover {
 }
 
 .detail-title {
-
+    display: block;
     color: #ffffff;
     font-size: clamp(26px, 4vw, 60px);
     padding: 20px;
@@ -199,7 +219,7 @@ footer a:hover {
 
 
 .detail-main figure>a>img {
-
+    width: 1280px;
     max-width: 100%;
     height: auto;
     outline: 10px solid white;
@@ -210,7 +230,7 @@ footer a:hover {
 figcaption {
 
     display: flex;
-    align-items:center;
+    align-items: center;
     padding: 10px;
     padding-bottom: 15px;
     background-color: white;
@@ -223,21 +243,23 @@ figcaption {
 }
 
 
-figcaption span{
+figcaption span {
     font-weight: 400;
     font-style: italic;
     font-size: clamp(5px, 18pt, 0.8rem);
     text-align: center;
 }
 
-figcaption span:nth-child(odd){
+figcaption span:nth-child(odd) {
     font-weight: bold;
     border-bottom: 2px dotted black;
     margin-bottom: 6px;
     margin-top: 6px;
 
 }
-.detail-image>h1{
+
+.detail-image>h1 {
+    font-size: 1.5rem;
     width: 33%;
     line-height: 2;
     min-width: fit-content;
@@ -248,30 +270,39 @@ figcaption span:nth-child(odd){
     margin-bottom: 20px;
 }
 
-.detail-image>p, .detail-image>h1 {
+.detail-image>p,
+.detail-image>h1 {
 
     color: rgb(233, 233, 233);
     text-shadow: 2px 2px 4px black;
     line-height: 2rem;
+    align-self: flex-start;
 
 }
+
 .detail-image>p::first-letter {
-    font-size: 150%;
+    font-weight:500;
+    font-size: 160%;
+    letter-spacing: 0.05rem;
     color: white;
-  }
-.detail-image > p a,.detail-image > p a:visited{
-    color:white;
+}
+
+.detail-image>p a,
+.detail-image>p a:visited {
+    color: white;
     font-weight: inherit;
     text-decoration: none;
     border-bottom: 2px dotted white;
 }
-.detail-image > p a:hover{
+
+.detail-image>p a:hover {
     /* color:rgb(130, 130, 255); */
     font-weight: inherit;
     text-decoration: none;
     border-bottom: 2px solid white;
 }
-.detail-image > p b{
+
+.detail-image>p b {
     /* color:rgb(130, 130, 255); */
     font-weight: 700;
     font-size: 1em;

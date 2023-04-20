@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
 import { DataItem } from "./fetch.js";
-import { it } from "test";
+
 
 type OptionTypes = "index" | "detail";
 
@@ -69,14 +69,19 @@ const renderDetailInterior = async (item: DataItem) => {
     if (matchMedium.length > 0) {
         mediumImage = item.mediumImage;
     } else {
-        mediumImage=item.originalImage;
+        mediumImage = item.originalImage;
     }
-    console.log(`pàgina: ${item.title}`);
-    
+    const d = new Date(item.date);
+    const date=d.toDateString();
+
+    console.log(`pàgina: ${item.titleSlug}`);
+
     return `
+    <span class="detail-return"> <a href="../index.html" target="self"> home </a></span>    
     <main class="detail-main">
 
-    <h1 class="detail-title">${item.title}</h1>
+        <h1 class="detail-title">${item.title}</h1>
+
     <div class="detail-image">
     <figure>
     <a href="${item.originalImage}"
@@ -85,8 +90,8 @@ const renderDetailInterior = async (item: DataItem) => {
     src="${mediumImage}"
     alt="${item.title}" />
     </a>
-    <figcaption><span>Date taken</span><span>${item.date}</span> <span>Authorship</span> <span>NASA's ${item.center} centre</span> <span>Keywords & Keyphrases</span>
-    <span> ${item.keywords}</span></figcaption>
+    <figcaption><span>Date taken</span><span>${date}</span> <span>Authorship</span> <span>NASA's ${item.center} centre</span> <span>Keywords & Keyphrases</span>
+    <span> ${item.keywordsString}</span></figcaption>
         </figure>
         <h1>Behind the image</h1>
     
@@ -111,7 +116,7 @@ const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
         <html lang="en">
         ${renderHeader(title + '-' + item.keywordsString, 'detail')}
         <body>
-        ${ await renderDetailInterior(item)}
+        ${await renderDetailInterior(item)}
         ${renderFooter()}
         ${renderScripts('detail')}
         </body>
