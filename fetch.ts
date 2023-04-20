@@ -40,7 +40,7 @@ export const fetchJson = async (query: string = 'nebula') => {
     const cleanData: Array<DataItem> = [];
     try {
         const data = await fetch(`https://images-api.nasa.gov/search?q=${query}&media_type=image`);
-        const jsonResponse: any = await data.json();
+        const jsonResponse: any = await data.json();      
         let index:number =0;
         for (const { href, data, links } of jsonResponse.collection.items) {
             if (data[0].center.toLowerCase() !== 'arc' && data[0].center.toLowerCase() !== 'select') {

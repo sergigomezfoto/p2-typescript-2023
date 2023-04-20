@@ -1,6 +1,6 @@
 
 
-export const renderJs= ()=>`
+export const renderIndexJs= ()=>`
 (() => {
 
     const indexTitleOpacity = () => {
@@ -23,5 +23,11 @@ export const renderJs= ()=>`
         );
       };
       indexTitleOpacity();
+})()
+`
+export const renderDetailJs= ()=>`
+(() => {
+
+    console.log('pàgina detail');
 })()
 `

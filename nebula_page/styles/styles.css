@@ -97,14 +97,10 @@ footer{
     min-height: 80px;
     align-items: center;
     justify-content: center;
-
-
 }
 footer span{
-
     text-align: center;
-    padding: 10px;
-  
+    padding: 10px; 
     color:white;
     font-weight: 300;
     font-family: 'Poppins', sans-serif;
@@ -120,4 +116,29 @@ a:hover{
     text-decoration: underline;
 }
 
+.detail-main {
+    margin: 0;
+    display: flex;
+    flex-flow: column wrap;
+    background-color: black;
+}
+
+.detail-title {
+
+    color: #ffffff;
+    min-height: 300px;
+    max-height: 300px;
+    font-size: clamp(20px, 4vw, 42px);
+    padding: 20px;
+    font-weight: 900;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1em;
+    z-index: 1;
+    text-align: center;
+    transition:  0.5s all;
+
+}
 
