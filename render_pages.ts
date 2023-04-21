@@ -29,15 +29,13 @@ const renderScripts = (page: OptionTypes) => {
     <script src="./js/js.js"></script>
     `
     } else if (page === 'detail') {
-        return `
-        <script src="../js/jsdetail.js"></script>
-        `
+        return //`<script src="../js/jsdetail.js"></script>`
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// INDEX
 const renderGallery = (title: string, dataArr: Array<DataItem>) => {
-    let html = `<span class="index-title">${title}</span><main class="index-main">`
+    let html = `<span class="index-title"><span>${title}</span></span><main class="index-main">`
     for (const item of dataArr) {
         html += `
         <div>
@@ -56,51 +54,46 @@ const renderGallery = (title: string, dataArr: Array<DataItem>) => {
     return html;
 }
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DETAIL
 const renderDetailInterior = async (item: DataItem) => {
 
     const data = await fetch(item.images);
     const jsonResponse: string[] = await data.json();
     const matchMedium = jsonResponse.filter(it => it.includes('~medium'));
-    let mediumImage: string = '';
-    if (matchMedium.length > 0) {
-        mediumImage = item.mediumImage;
-    } else {
-        mediumImage = item.originalImage;
-    }
+    const mediumImage = matchMedium.length < 1 ? item.originalImage :item.mediumImage;
+    const metadata = jsonResponse.filter((e) => e.includes('.json') ).toString();
     const d = new Date(item.date);
-    const date=d.toDateString();
-
-    console.log(`pàgina: ${item.titleSlug}`);
-
+    const date=d.toDateString();   
+    console.log(
+        item.titleSlug
+    );
+    
+    
     return `
     <span class="detail-return"> <a href="../index.html" target="self"> home </a></span>    
     <main class="detail-main">
-
-        <h1 class="detail-title">${item.title}</h1>
-
-    <div class="detail-image">
-    <figure>
-    <a href="${item.originalImage}"
-    target="_blank">
-    <img class="gallery-img"
-    src="${mediumImage}"
-    alt="${item.title}" />
-    </a>
-    <figcaption><span>Date taken</span><span>${date}</span> <span>Authorship</span> <span>NASA's ${item.center} centre</span> <span>Keywords & Keyphrases</span>
-    <span> ${item.keywordsString}</span></figcaption>
-        </figure>
-        <h1>Behind the image</h1>
-    
-        <p class="detail-text">
-            ${item.cleanText}
+        <div class="detail-image">
+            <h1 class="detail-title">${item.title}</h1>
+            <figure>
+                <a href="${item.originalImage}" target="_blank">
+                    <img class="gallery-img" src="${mediumImage}" alt="${item.title}" />
+                </a>
+                <figcaption>
+                    <span>Date taken</span>
+                    <span>${date}</span>
+                     <span>Authorship</span>
+                      <span>NASA's ${item.center} centre</span>
+                       <span>Keywords & Keyphrases</span>
+                    <span> ${item.keywordsString}</span>
+                    <a href="${metadata}">Metadata JSON</a>
+                </figcaption>
+            </figure>
+            <h1>Behind the image</h1>
+            <p class="detail-text">
+                ${item.cleanText}
             </p>
-            </div>
-            
-            </main>
+        </div>
+    </main>
             
             
             `;
@@ -110,11 +103,10 @@ const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
     // let test = true;
     for (const item of dataArr) {
         // if (test === true) {
-
         let html = `
         <!DOCTYPE html>
         <html lang="en">
-        ${renderHeader(title + '-' + item.keywordsString, 'detail')}
+        ${renderHeader(title + ' - ' + item.title, 'detail')}
         <body>
         ${await renderDetailInterior(item)}
         ${renderFooter()}
@@ -122,7 +114,7 @@ const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
         </body>
         </html>
         `;
-        writeFileSync(`./${title}_page/pages/${item.titleSlug}.html`, html);
+        writeFileSync(`./${title.replaceAll(' ','-')}_page/pages/${item.titleSlug}.html`, html);
         // test = false;
         // }
     }

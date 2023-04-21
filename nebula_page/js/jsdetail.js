@@ -1,5 +1,0 @@
-
-(() => {
-
-    console.log('pàgina detail');
-})()

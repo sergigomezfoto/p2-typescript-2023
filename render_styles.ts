@@ -1,5 +1,9 @@
 export const renderStyles= ()=>`
 
+
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -11,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: black;
     font-family: 'Poppins', sans-serif;
 }
@@ -28,14 +33,17 @@ body::after {
     right: 0;
     position: absolute;
     z-index: -1;
+
 }
 
 
-.spacer {
-    height: 100%;
-}
+
 
 .index-title {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width:calc(100% - 80px);
     position: absolute;
     top: 450px;
     left: 50%;
@@ -43,7 +51,7 @@ body::after {
     color: #ffffff;
     min-height: 300px;
     max-height: 300px;
-    font-size: clamp(10px, 20vw, 300px);
+    font-size: 10vw;
     padding: 0;
     font-weight: 900;
     text-transform: uppercase;
@@ -188,9 +196,11 @@ footer a:hover {
     letter-spacing: normal;
 }
 
-.detail-title {
+main > div .detail-title {
     display: block;
     color: #ffffff;
+    border-bottom: inherit;
+    margin-bottom: inherit;
     font-size: clamp(26px, 4vw, 60px);
     padding: 20px;
     font-weight: 900;
@@ -257,7 +267,21 @@ figcaption span:nth-child(odd) {
     margin-top: 6px;
 
 }
-
+figcaption a{
+    color:black;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-weight: 400;
+    font-size: clamp(5px, 18pt, 0.8rem);
+    text-align: center;
+    text-decoration: none;
+}
+figcaption a:hover{
+    text-decoration: underline;
+}
+figcaption a::after{
+    content:'↗';
+}
 .detail-image>h1 {
     font-size: 1.5rem;
     width: 33%;
@@ -309,5 +333,8 @@ figcaption span:nth-child(odd) {
     font-weight: 700;
     font-size: 1em;
 }
+
+
+
 
 `
