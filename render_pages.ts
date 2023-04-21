@@ -23,15 +23,7 @@ const renderFooter = () =>
             <span>This static page is using <a href="https://api.nasa.gov/" target="_blank">NASA's Image and Video Library API</a>. It has been created dynamically by <a href="https://sergigomez.com" taget="_blank">Sergi Gómez</a> using <a href="https://bun.sh/" target="_blank">Bun</a> and <a href="https://www.typescriptlang.org/" target="_blank">Typescript</a> on <b>${new Date().toLocaleString("en-US", { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, hourCycle: 'h23', }).replace(',', '<em style="font-weight: normal;font-style:normal;"> at </em>')}</b>. Take a look at the <a href="https://github.com/sergigomezfoto/p2-typescript-2023" target="_blank">Git Repository</a></span> 
     </footer>
 `
-const renderScripts = (page: OptionTypes) => {
-    if (page === 'index') {
-        return `
-    <script src="./js/js.js"></script>
-    `
-    } else if (page === 'detail') {
-        return //`<script src="../js/jsdetail.js"></script>`
-    }
-}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// INDEX
 const renderGallery = (title: string, dataArr: Array<DataItem>) => {
@@ -50,11 +42,15 @@ const renderGallery = (title: string, dataArr: Array<DataItem>) => {
     }
     html += `</main>`
     html += renderFooter();
-
+    
     return html;
 }
+const renderScripts = () => `
+    <script src="./js/js.js"></script>
+    `
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DETAIL
+
 const renderDetailInterior = async (item: DataItem) => {
     try {
         const data = await fetch(item.images);
@@ -91,8 +87,7 @@ const renderDetailInterior = async (item: DataItem) => {
                 ${item.cleanText}
             </p>
         </div>
-    </main>
-                     
+    </main>                  
             `;
     } catch (error) {
         console.log(error);
@@ -112,7 +107,6 @@ const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
         <body>
         ${await renderDetailInterior(item)}
         ${renderFooter()}
-        ${renderScripts('detail')}
         </body>
         </html>
         `;
@@ -132,7 +126,7 @@ export const renderPages = (title: string, dataArr: Array<DataItem>) => {
     ${renderHeader(title, 'index')}
     <body>
     ${renderGallery(title, dataArr)}
-    ${renderScripts('index')}
+    ${renderScripts()}
     </body>
     </html>
     `
