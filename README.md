@@ -9,8 +9,11 @@ La varible `minimumItems` fa de límit per sota del numero de registres trobats.
 
         const minimumItems: number = 50;
 
-La aplicació servirá un màxim de 100 resultats. Aquest paràmetre es podía cambiar però no he volgut fer-ho. 
-* Deixo la pàgina resultant de la cèrca de 'nebula' com a exemple.
+La aplicació servirá un màxim de 100 resultats. Aquest paràmetre es podía 
+cambiar però no he volgut fer-ho.
+
+
+** Deixo la pàgina resultant de la cèrca de 'nebula' com a exemple.
 
 
 >Tant la API de NASA com CLOUDINARY (que fà servir la Nasa per allotjar les imatges) tenen restriccions de número de peticions per un temps concret, així que si es fan moltes cerques, peta la aplicació o es deixen de veure les imatges a la web generada. Els dos problemes se solucionen amb el temps. 5-10 minuts.
