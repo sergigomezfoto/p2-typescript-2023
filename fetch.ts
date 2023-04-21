@@ -44,7 +44,7 @@ export const fetchJson = async (query: string = 'nebula') => {
         const jsonResponse: any = await data.json();   
         let index:number =0;
         for (const { href, data, links } of jsonResponse.collection.items) {
-            if (data[0].center.toLowerCase() !== 'arc' && data[0].center.toLowerCase() !== 'select') {
+            if (data[0].center && data[0].center.toLowerCase() !== 'arc' && data[0].center.toLowerCase() !== 'select') {
                 index +=1;
                 cleanData.push(new DataItem(href, data[0].title, links[0].href, data[0].center, data[0].date_created, data[0].description, data[0].keywords,index));              
             }

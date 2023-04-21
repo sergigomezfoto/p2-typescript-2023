@@ -56,20 +56,18 @@ const renderGallery = (title: string, dataArr: Array<DataItem>) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DETAIL
 const renderDetailInterior = async (item: DataItem) => {
-
-    const data = await fetch(item.images);
-    const jsonResponse: string[] = await data.json();
-    const matchMedium = jsonResponse.filter(it => it.includes('~medium'));
-    const mediumImage = matchMedium.length < 1 ? item.originalImage :item.mediumImage;
-    const metadata = jsonResponse.filter((e) => e.includes('.json') ).toString();
-    const d = new Date(item.date);
-    const date=d.toDateString();   
-    console.log(
-        item.titleSlug
-    );
-    
-    
-    return `
+    try {
+        const data = await fetch(item.images);
+        const jsonResponse: string[] = await data.json();
+        const matchMedium = jsonResponse.filter(it => it.includes('~medium'));
+        const mediumImage = matchMedium.length < 1 ? item.originalImage : item.mediumImage;
+        const metadata = jsonResponse.filter((e) => e.includes('.json')).toString();
+        const d = new Date(item.date);
+        const date = d.toDateString();
+        console.log(
+            item.titleSlug
+        );
+        return `
     <span class="detail-return"> <a href="../index.html" target="self"> home </a></span>    
     <main class="detail-main">
         <div class="detail-image">
@@ -94,11 +92,15 @@ const renderDetailInterior = async (item: DataItem) => {
             </p>
         </div>
     </main>
-            
-            
+                     
             `;
-}
+    } catch (error) {
+        console.log(error);
 
+    }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
     // let test = true;
     for (const item of dataArr) {
@@ -114,7 +116,7 @@ const renderDetail = async (title: string, dataArr: Array<DataItem>) => {
         </body>
         </html>
         `;
-        writeFileSync(`./${title.replaceAll(' ','-')}_page/pages/${item.titleSlug}.html`, html);
+        writeFileSync(`./${title.replaceAll(' ', '-')}_page/pages/${item.titleSlug}.html`, html);
         // test = false;
         // }
     }

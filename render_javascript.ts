@@ -25,9 +25,3 @@ export const renderIndexJs= ()=>`
 })();
 
 `
-export const renderDetailJs= ()=>`
-(() => {
-
-    console.log('pàgina detail');
-})()
-`
