@@ -18,7 +18,4 @@ writeFileSync(`./${keyWord}_page/index.html`, renderPages(keyWord, itemsArray));
 
 
 
-// let arr=[
-//     "Chandra X-ray Observatory,Hubble Space Telescope,Spitzer Space T"
-// ];
 

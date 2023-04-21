@@ -31,10 +31,12 @@ export class DataItem {
         return this.keywords.join(' · ')
     }
     get titleSlug(){
-        return  `${this.index}-${this.title.replace(/\s{2,}|\r|\t|\n|[!@#$%^&*(),.?"·'\u2019=\+`´:{}|<>\u00C0-\u00ff\u201C\u201D]|’/g, "").trim().toLocaleLowerCase().replaceAll(' ','-')}`;
+        return  `${this.index}-${this.title.replace(/\s{2,}|\r|\t|\n|[!@#$%^&*(),.?"·'\u2019=\+`´:{}|<>\u00C0-\u00ff\u201C\u201D]|’/g, "").trim().toLowerCase().replaceAll(' ','-')}`;
     }
     get cleanText(){
-        return this.description.replaceAll('\"','"');
+        let untagedRegex=/[\b\s](https?:\/\/[\w\d\.-/]+\.*\b)/g;
+        let unquoteText =this.description.replaceAll('\"','"');
+        return unquoteText.replaceAll(untagedRegex,`<a href="$1" target="_blank"> link </a>`);
     }
 }
 
