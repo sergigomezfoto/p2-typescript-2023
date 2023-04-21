@@ -279,12 +279,14 @@ figcaption span:nth-child(odd) {
     align-self: flex-start;
 
 }
-
+.detail-image>p{
+    margin-bottom: 40px;
+}
 .detail-image>p::first-letter {
     font-weight:500;
     font-size: 160%;
     letter-spacing: 0.05rem;
-    color: white;
+    color: rgb(233, 233, 233);
 }
 
 .detail-image>p a,
